@@ -5,9 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 const AccountModal = ({ open, handleClose, sub }) => {
   const [name, setName] = useState("");
   const [total, setTotal] = useState(0);
-  const url = "/api/accounts";
+  const accountUrl = "/api/accounts";
   const handleSubmit = async () => {
-    const response = await fetch(url, {
+    const accountResponse = await fetch(accountUrl, {
       method: "POST",
       mode: "cors",
       credentials: "same-origin",
@@ -16,15 +16,35 @@ const AccountModal = ({ open, handleClose, sub }) => {
       },
       body: JSON.stringify({ name: name, total: parseFloat(total), sub: sub }),
     });
-    const status = response.status;
-    if (status != 200) {
+    const accountStatus = accountResponse.status;
+    if (accountStatus != 200) {
       console.log(status);
-      window.alert("Something went wrong. Please try again.")
+      window.alert("Something went wrong. Please try again.");
     } else {
-      console.log("successfully added new account.")
-      handleClose();
-      location.reload();
+      console.log("successfully added new account.");
     }
+    accountResponse.json().then(async (json) => {
+      const accountId = json.insertedId;
+      const transUrl = "/api/transactions";
+      const transResponse = await fetch(transUrl, {
+        method: "POST",
+        mode: "cors",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ account: accountId, transactions: [] }),
+      });
+      const transStatus = transResponse.status;
+      if (transStatus != 200) {
+        console.log(status);
+        window.alert("Something went wrong. Please try again.");
+      } else {
+        console.log("successfully added to transaction collection.");
+        handleClose();
+        location.reload();
+      }
+    });
   };
   const useStyles = makeStyles((theme) => ({
     paper: {

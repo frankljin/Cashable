@@ -35,7 +35,6 @@ const Details = ({ account, transaction }) => {
           <TransactionModal open={open} handleClose={handleClose} />
         </Grid>
         <Transactions transaction={transaction} />
-        <p>{JSON.stringify(transaction)}</p>
       </div>
     </>
   );
