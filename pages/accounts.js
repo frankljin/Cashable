@@ -7,17 +7,16 @@ import AccountModal from "../components/AccountModal/AccountModal";
 import { Grid } from "@material-ui/core";
 import styles from "../styles/Accounts.module.css";
 
-  
 const Accounts = () => {
   const { user, error, isLoading } = useUser();
   const [accounts, setAccounts] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
-      setOpen(true);
-  }
+    setOpen(true);
+  };
   const handleClose = () => {
     setOpen(false);
-}
+  };
   useEffect(() => {
     const getAccounts = async () => {
       const res = await fetch(
@@ -39,10 +38,18 @@ const Accounts = () => {
         <div className={styles.main}>
           <Grid container justify="flex-end">
             <h1 style={{ flex: 1 }}>Accounts</h1>
-            <Button variant="contained" style={{ background: "#65CCB8" }} onClick={handleOpen}>
+            <Button
+              variant="contained"
+              style={{ background: "#65CCB8" }}
+              onClick={handleOpen}
+            >
               Add Account
             </Button>
-            <AccountModal open={open} handleClose={handleClose} sub={user.sub}/>
+            <AccountModal
+              open={open}
+              handleClose={handleClose}
+              sub={user.sub}
+            />
           </Grid>
           {accounts.length === 0 ? (
             <p>
@@ -52,7 +59,7 @@ const Accounts = () => {
           ) : (
             <>
               <p>
-                This is where you'll find transaction details about your
+                This is where you&apos;ll find transaction details about your
                 individual accounts active on Cashable, as well as overall
                 transaction details for all active accounts.
               </p>

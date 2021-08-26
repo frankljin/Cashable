@@ -32,7 +32,7 @@ const Details = ({ account, transaction }) => {
           >
             Add Transaction
           </Button>
-          <TransactionModal open={open} handleClose={handleClose} />
+          <TransactionModal open={open} handleClose={handleClose} id={account._id} />
         </Grid>
         <Transactions transaction={transaction} />
       </div>
