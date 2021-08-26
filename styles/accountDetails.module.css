@@ -1,0 +1,10 @@
+.main {
+  padding: 5rem 2rem 0rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.accountName {
+  color: #57ba98;
+}
