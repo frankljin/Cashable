@@ -12,4 +12,13 @@ handler.get(async (req, res) => {
   res.json(doc);
 });
 
+handler.put(async (req, res) => {
+  const { id } = req.body;
+  const query = { _id: ObjectId(id) };
+  let doc = await req.db
+    .collection("accounts")
+    .findOneAndUpdate(query, { $set: { total: req.body.total } });
+  res.json(doc);
+});
+
 export default handler;

@@ -8,3 +8,8 @@
 .accountName {
   color: #57ba98;
 }
+
+.total {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}

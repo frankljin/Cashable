@@ -65,7 +65,7 @@ const AccountModal = ({ open, handleClose, sub }) => {
       transform: `translate(-${top}%, -${left}%)`,
     };
   };
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = useState(getModalStyle);
   const classes = useStyles();
   return (
     <Modal open={open} onClose={handleClose}>
