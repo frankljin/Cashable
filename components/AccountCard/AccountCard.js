@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-const AccountCard = ({ name, total, color, text, key, id }) => {
+const AccountCard = ({ name, total, color, text, key, id, noDetails }) => {
   const classes = useStyles();
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -44,9 +44,15 @@ const AccountCard = ({ name, total, color, text, key, id }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" style={{ color: "#65ccb8" }} href={`accountDetails/${id}`}>
-          Details
-        </Button>
+        {!noDetails && (
+          <Button
+            size="small"
+            style={{ color: "#65ccb8" }}
+            href={`accountDetails/${id}`}
+          >
+            Details
+          </Button>
+        )}
       </CardActions>
     </Card>
   );

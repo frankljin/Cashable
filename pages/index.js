@@ -2,7 +2,7 @@ import React from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import Navbar from "../components/Navbar/Navbar";
 import { Paper, Grid } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import styles from "../styles/Home.module.css";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
   },
 }));
@@ -24,25 +24,31 @@ const Home = ({ data }) => {
       <Navbar user={user} />
       {user && (
         <div className={styles.main}>
-          <h1>Hello, <span className={styles.nameText}>{user.nickname}!</span></h1>
+          <h1>
+            Hello, <span className={styles.nameText}>{user.nickname}!</span>
+          </h1>
           <p>Welcome to Cashable - A simple and modern expense manager. </p>
-          <div style={{paddingLeft: '1rem', paddingRight: '1rem'}}>
-          <Grid container spacing={3}>
-            <Grid item xs={6} sm={2.5}>
-              <Paper className={classes.paper}>Transactions</Paper>
+          <div style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
+            <Grid container spacing={3}>
+              <Grid item xs={6} sm={2.5}>
+                <Paper className={classes.paper}>Coming Soon</Paper>
+              </Grid>
+              <Grid item xs={6} sm={2.5}>
+                <Paper className={classes.paper}>
+                  {" "}
+                  <a href="budgets">Budgets</a>
+                </Paper>
+              </Grid>
+              <Grid item xs={6} sm={2.5}>
+                <Paper className={classes.paper}>
+                  <a href="accounts">Accounts</a>
+                </Paper>
+              </Grid>
+              <Grid item xs={6} sm={2.5}>
+                <Paper className={classes.paper}>Reports</Paper>
+              </Grid>
             </Grid>
-            <Grid item xs={6} sm={2.5}>
-              <Paper className={classes.paper}>Budgets</Paper>
-            </Grid>
-            <Grid item xs={6} sm={2.5}>
-              <Paper className={classes.paper}><a href="accounts">Accounts</a></Paper>
-            </Grid>
-            <Grid item xs={6} sm={2.5}>
-              <Paper className={classes.paper}>Reports</Paper>
-            </Grid>
-          </Grid>
           </div>
-          
         </div>
       )}
     </>

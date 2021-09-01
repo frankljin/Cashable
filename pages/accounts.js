@@ -4,10 +4,11 @@ import Navbar from "../components/Navbar/Navbar";
 import AccountCard from "../components/AccountCard/AccountCard";
 import Button from "@material-ui/core/Button";
 import AccountModal from "../components/AccountModal/AccountModal";
+import MultiAccounts from "../components/MultiAccounts/MultiAccounts";
 import { Grid } from "@material-ui/core";
 import styles from "../styles/Accounts.module.css";
 
-const Accounts = () => {
+const Accounts = ({ transaction }) => {
   const { user, error, isLoading } = useUser();
   const [accounts, setAccounts] = useState([]);
   const [open, setOpen] = useState(false);
@@ -69,19 +70,27 @@ const Accounts = () => {
                 key={0}
                 color="#182628"
                 text="white"
+                noDetails
               />
-              {accounts.map((account) => {
-                return (
-                  <AccountCard
-                    name={account.name}
-                    total={account.total}
-                    key={account._id}
-                    id={account._id}
-                    color="white"
-                    text="black"
-                  />
-                );
-              })}
+              <Grid container spacing={3}>
+                <Grid item xs={9}>
+                  {accounts.map((account) => {
+                    return (
+                      <AccountCard
+                        name={account.name}
+                        total={account.total}
+                        key={account._id}
+                        id={account._id}
+                        color="white"
+                        text="black"
+                      />
+                    );
+                  })}
+                </Grid>
+                <Grid item xs={3}>
+                  <MultiAccounts transaction={transaction} />
+                </Grid>
+              </Grid>
             </>
           )}
         </div>
@@ -89,5 +98,22 @@ const Accounts = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context) {
+  const accountRes = await fetch(
+    `http://localhost:3000/api/accountDetails?id=6126a6e6664d246df2df3a40`
+  );
+  const accountJson = await accountRes.json();
+  const transactionRes = await fetch(
+    `http://localhost:3000/api/transactions?id=6126a6e6664d246df2df3a40`
+  );
+  const transactionJson = await transactionRes.json();
+  return {
+    props: {
+      account: accountJson,
+      transaction: transactionJson,
+    },
+  };
+}
 
 export default Accounts;

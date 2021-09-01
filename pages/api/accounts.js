@@ -16,4 +16,9 @@ handler.post(async (req, res) => {
   res.json(doc)
 })
 
+// handler.delete(async (req, res) => {
+//   const { id } = req.query;
+//   const query = { sub: id };
+//   let doc = await req.db.collection("accounts")
+// })
 export default handler;
