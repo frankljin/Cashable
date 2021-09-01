@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import Navbar from "../components/Navbar/Navbar";
 import styles from "../styles/Budgets.module.css";
@@ -12,9 +12,23 @@ const Budgets = () => {
   const { user } = useUser();
   const [value, setValue] = useState(0);
   const [add, setAdd] = useState(false);
+  const [budgets, setBudgets] = useState([]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  useEffect(() => {
+    const getAccounts = async () => {
+      const res = await fetch(
+        `http://localhost:3000/api/budgets?id=${user.sub}`
+      );
+      const json = await res.json();
+      setBudgets(json);
+      console.log(json);
+    };
+    if (user) {
+      getAccounts();
+    }
+  }, [user]);
   return (
     <>
       <Navbar user={user} />
@@ -50,12 +64,24 @@ const Budgets = () => {
               <Grid container spacing={3}>
                 {add && (
                   <Grid item xs={6}>
-                    <BudgetCard name="Test Budget" spent={20} max={50} edit />
+                    <BudgetCard
+                      edit
+                      sub={user.sub}
+                    />
                   </Grid>
                 )}
-                <Grid item xs={6}>
-                  <BudgetCard name="Test Budget" spent={20} max={50} />
-                </Grid>
+                {budgets.map((budget) => {
+                  return (
+                    <Grid item xs={6} key={budget._id}>
+                      <BudgetCard
+                        name={budget.budgetName}
+                        spent={budget.spent}
+                        max={budget.limit}
+                        sub={user.sub}
+                      />
+                    </Grid>
+                  );
+                })}
               </Grid>
             </div>
           ) : (
