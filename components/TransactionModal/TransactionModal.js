@@ -8,12 +8,14 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import DayPicker from "../DayPicker/DayPicker";
 import TypeSelect from "../TypeSelect/TypeSelect";
+import BudgetSelect from "../BudgetSelect/BudgetSelect";
 
-const TransactionModal = ({ open, handleClose, id, accountTotal }) => {
+const TransactionModal = ({ open, handleClose, id, accountTotal, budgets }) => {
   const [name, setName] = useState("");
   const [total, setTotal] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [type, setType] = useState("");
+  const [budget, setBudget] = useState("");
   const [value, setValue] = useState("expense");
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -58,6 +60,30 @@ const TransactionModal = ({ open, handleClose, id, accountTotal }) => {
       window.alert("Something went wrong. Please try again.");
     } else {
       console.log("Successfully added new account.");
+    }
+    if (budget !== "") {
+      const budgetUrl = "/api/budgets";
+      const budgetResponse = await fetch(budgetUrl, {
+        method: "PUT",
+        mode: "cors",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          spent: parseInt(total) + parseInt(budget.spent),
+          id: budget._id,
+        }),
+      });
+      const budgetStatus = budgetResponse.status;
+      if (budgetStatus != 200) {
+        console.log(budgetStatus);
+        window.alert("Something went wrong. Please try again.");
+      } else {
+        console.log("Successfully changed account budget.");
+        handleClose();
+        location.reload();
+      }
     }
     const balanceUrl = "/api/accountDetails";
     const balanceResponse = await fetch(balanceUrl, {
@@ -154,6 +180,14 @@ const TransactionModal = ({ open, handleClose, id, accountTotal }) => {
         </div>
         <div style={{ marginBottom: "1rem" }}>
           <TypeSelect type={type} setType={setType} />
+        </div>
+        <div style={{ marginBottom: "1rem" }}>
+          <BudgetSelect
+            budget={budget}
+            budgets={budgets}
+            setBudget={setBudget}
+            total={total}
+          />
         </div>
         <div style={{ marginBottom: "1rem" }}>
           <DayPicker
