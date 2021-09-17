@@ -45,7 +45,9 @@ const Home = ({ data }) => {
                 </Paper>
               </Grid>
               <Grid item xs={6} sm={2.5}>
-                <Paper className={classes.paper}>Reports</Paper>
+                <Paper className={classes.paper}>
+                  <a href="reports">Reports</a>
+                </Paper>
               </Grid>
             </Grid>
           </div>

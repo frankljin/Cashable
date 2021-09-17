@@ -83,9 +83,10 @@ const Navbar = ({ user }) => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+                <MenuItem onClick={handleClose}><a href="/">Dashboard</a></MenuItem>
                 <MenuItem onClick={handleClose}><a href="/accounts">Accounts</a></MenuItem>
                 <MenuItem onClick={handleClose}><a href="/budgets">Budgets</a></MenuItem>
+                <MenuItem onClick={handleClose}><a href="/reports">Reports</a></MenuItem>
                 <MenuItem onClick={handleClose}><a href="/api/auth/logout">Logout</a></MenuItem>
               </Menu>
             </div>
